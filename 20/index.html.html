@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by anonymous (http://jsbin.com/vopuqokoni/39/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>20</title>
+  <link href="https://fonts.googleapis.com/css?family=Khand" rel="stylesheet">
+<style id="jsbin-css">
+@font-fase{
+  
+  font-family:  'Lato';
+  src: url('https://fonts.googleapis.com/css?family=Lato');
+} 
+ 
+
+body{
+    
+    font-family: 'Khand', sans-serif;
+}
+pre{
+  white-space: pre-wrap;
+}
+.blockq {
+  padding:5px 15px;
+  background-color:cadetblue;
+}
+
+span.quote::before {
+  content: '"';
+}
+
+span.quote::after {
+  content: '"';
+}
+
+.fletter::first-letter{
+  color: #3a6e84;
+}
+
+.fline::first-line {
+  color: #3a6e84;
+}
+
+.select::selection {
+  background: crimson;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+  color: royalblue;
+}
+
+a:hover {
+  color:black;
+  background:lightgrey;
+}
+
+a:visited {
+  color:black;
+}
+
+a:active {
+  background: lightgrey;
+  color: teal;
+}
+
+@media screen and (max-width: 300px) {
+  .im {width: 270px;}
+  .location {margin: 0 10px;}
+  h1 {font-size: 20px;}
+  h3 {font-size: 14px}
+  p,ol,li,span {font-size: 13px;}
+ .blockq{font-size: 12px;}
+}
+
+@media screen and (min-width: 301px) and (max-width: 480px) {
+  .im {width: 300px;}
+  .location {margin: 0 40px;}
+  h1 {font-size: 24px;}
+  h3 {font-size: 19px}
+  p,li,span {font-size: 15px;}
+  .blockq{font-size: 12px;}
+}
+@media screen and (min-width: 481px) and (max-width: 660px) {
+  .im {width: 420px;}
+  .location {margin: 0 55px;}
+  h1 {font-size: 24px;}
+  h3 {font-size: 19px}
+  p,li,span {font-size: 15px;}
+  .blockq{font-size: 12px;}
+}
+@media screen and (min-width: 660px) and (max-width: 1281px) {
+  .im {width: 460px; margin: 0 30px;}
+  .location {margin: 0 140px;}
+  h1 {font-size: 34px;}
+  h3 {font-size: 29px}
+  p,li,span {font-size: 20px;}
+  .blockq{font-size: 17px;}
+}
+@media screen and (min-width: 1281px) and (max-width: 1920px) {
+  .im {width: 660px; margin: 0 30px;}
+  .location {margin: 0 300px;}
+  h1 {font-size: 44px;}
+  h3 {font-size: 32px;}
+  p,li,span {font-size: 25px;}
+  .blockq{font-size: 22px;}
+}
+</style>
+</head>
+
+<body>
+  <div class ="location" >
+    <img class="im" src="http://s3.amazonaws.com/s3.timetoast.com/public/uploads/photos/9384389/prolog_logo_splash_1_.gif?1484143099">
+    <div>
+      <h1 class="fletter select">Prolog</h1>
+      <span class="quote select"><b>Пролог</b> - это декларативный язык, программы на котором содержат объявления логических взаимосвязей, необходимых для решения задачи.
+       В Прологе рассматриваются отношения между утверждениями и объектами, характерные для логики предикатов.</span>
+      <br><span class="select">Программирование на Прологе включает в себя следующие этапы:
+      <ol>
+        <li class ="select">Объявление фактов об объектах и отношениях между ними;</li>
+        <li class ="select">Оределение правил взаимосвязи объектов и отношений между ними;</li>
+        <li class ="select">формулировка вопроса об объектах и отношениях между ними.</li>
+      </ol>
+      </span>
+    </div>
+    <div>
+      <h3 class="fline select">Основные понятия пролога</h3>
+      <p class="select">В программах на Прологе существует три типа предложений:</p>
+      <ul>
+        <li class="select">Факт</li>
+        <li class="select">Правило вывода</li>
+        <li class="select">Цель</li>
+      </ul>
+      <p class="select">
+        <b>Факт</b> - утверждение, истинность которого безусловна.
+        <br><b>Правило</b> - утверждение, зависящее от условий.
+        <br><b>Цель</b> - вопрос пользователя к системе о том, какие утверждения являются истинными.
+      </p>
+      <span class="select">Пример программы на прологе:</span>
+      <blockquot>
+        <code>
+            <pre class = "select blockq">
+predicates
+can_buy(symbol, symbol) /* отношение "может купить" */
+person(symbol)	/* отношение "субъект */
+likes(symbol, symbol)
+for_sale(symbol)	/* отношение "продается" */
+
+clauses
+   can_buy(X, Y) :-
+         person(X),
+         car(Y),
+         likes(X, Y),
+         for_sale(Y). 
+            
+   person(kelly).
+   person(judy).
+   likes(kelly, hot_rod).
+   likes(judy, pizza).
+   for_sale(pizza).
+   for_sale(hot_rod).
+              </pre>
+        </code>
+        </blockquote>
+    </div>
+
+    <br><span class="select">На все поставленные вопросы Пролог пытается ответить с помощью фактов и правил вывода. Он решает задачу, просматривая программу сверху вниз и слева направо. Сначала анализируется цель и ведется поиск такого факта или правила вывода, с помощью которого
+      она может быть достигнута. При нахождении такого факта после соответствующей подстановки переменных Пролог переходит к анализу следующей цели при условии, что предыдущая достигнута (доказана). Если некоторая цель последняя, доказательство заканчивается.</p>
+    </span>
+    <span class="select">Узнать больше о Prolog можно в книге <a href ="http://rusinov.net/wp-content/uploads/2012/05/Основы-программирования-на-Пролог.pdf">
+      <span  class="quote select">Основы программирования на языке пролог</span>
+    </a>
+    </span>
+  </div>
+</body>
+
+</html>
