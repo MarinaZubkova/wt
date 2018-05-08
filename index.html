@@ -3,45 +3,215 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2018 by anonymous (http://jsbin.com/siputawuha/1/edit)
+Copyright (c) 2018 by anonymous (http://jsbin.com/wunedobele/1/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
 <meta name="robots" content="noindex">
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>26</title>
 <style id="jsbin-css">
-h1{
-  color:indigo;
-  font-style: italic;
+body{
+  background:url("https://img-fotki.yandex.ru/get/5508/200418627.d4/0_14abcd_c7204723_orig.png") no-repeat fixed;
+  margin-left:100px; 
+  padding:45px;
+}
+.styling{
+  margin:0 300px;
+}
+@media screen and (min-width: 300px)and (max-width: 400px) {
+  h1 {font-size: 20px}
+  h3 {font-size: 14px}
+  h4 {font-size: 12px}
+  .styling {margin:10px;}
+  }
+
+@media screen and (min-width: 401px) and (max-width: 639px) {
+   h1 {font-size: 23px}
+  .styling {margin:50px;}
+}
+@media screen and (min-width: 640px) and (max-width: 1024px) {
+ .styling {margin:100px;}
 }
 
-body{
-  background-color:blanchedalmond;
-}
-em{
-  color:purple;
-}
 </style>
 </head>
+
+  
 <body>
- <h1>Котики</h1>
-<img src ="http://infoglaz.ru/wp-content/uploads/wallls.com-7302-1280x719.jpg" width="400" height="300">
-<p>Приветствуем вас на сайте о котиках. Если вы их любите, то оставайтесь с нами.</p>
-<p>Интересные факты о пушистиках:</p>
-  <ul>
-  <li>Опекая хозяина, кот должен своевременно проводить досмотр холодильника. Если человек там прячет нечто, изучить это нечто и по возможности ликвидировать;</li>
-  <li>также кот помогает застелить кровать, тщательно проверив, чтобы в постель не попали посторонние предметы;</li>
-  <li>чтобы потешить хозяина, настоящий кот поет песни, грустные песни также исполняются;</li>
-  <li>если человек не бодурствует, то настоящий кот обязан запрыгнуть тому на лицо или прилечь на голову;</li>
-  <li>коты - это жидкость, смотрите, чтобы ваш кот не утек;</li>
-  <li1>и наконец, в течение дня кот должty выспаться за человека. За его родственников. За друзей. За коллег. И за всех вместе взятых.</li>
-</ul>
- <p>А вообще кошки очень <em>грациозные</em>, независимые существа, которые являются отличными питомцами для человека.</p>
-<img src ="https://pp.userapi.com/c841035/v841035853/7198a/ttWE1i2Xqjs.jpg">
-<p><strong>Спасибо за просмотр!</strong></p>
+ <div class ="styling">
+  <div>
+    <h1>To Do List</h1>
+  </div>
+  <div>
+    <h3 style ="color:#6600FF">Актуальные задачи</h3>
+    <input maxlength="200" size="30" id ="txtadd">
+    <input type="button" value="Добавить задачу" id ="add">
+    
+    <h4>Отсортировать задачи</h4>
+    <input type="button" value="По алфавиту" id ="abc">
+    <input type="button" value="Попорядку добавления" id ="time">
+    <br><ul id ="current_list"></ul>
+  </div>
+  <div>
+    <h3 style ="color:#6600FF">Архив</h3>
+    <ul id ="archive_list"></ul>
+  </div>
+</div>
+<script id="jsbin-javascript">
+var 
+  buttonAdd = document.getElementById("add"),
+  buttonSortTime = document.getElementById("time"),
+  buttonSortABC = document.getElementById("abc"),
+  textAdd = document.getElementById("txtadd"),
+  currentList = document.getElementById("current_list"),
+  archiveList = document.getElementById("archive_list"),
+  count_Del = 0,
+  count_Done =0
+
+buttonAdd.onclick = function(){
+   var newElem = document.createElement("li"),
+       buttonDel = document.createElement("input")
+       buttonDone = document.createElement("input"),
+       now = new Date()
+  
+   buttonDel.setAttribute("value","Удалить")
+   buttonDel.setAttribute("type","button")
+   buttonDel.setAttribute("id","butDel"+ count_Del)
+   buttonDel.setAttribute("onclick","remove(id)")
+   count_Del=count_Del+1
+   
+   
+   buttonDone.setAttribute("value","Выполнить")
+   buttonDone.setAttribute("type","button")
+   buttonDone.setAttribute("id","butDone"+ count_Done)
+   buttonDone.setAttribute("onclick"," done(id)")
+   count_Done = count_Done+1
+   
+   newElem.innerText = textAdd.value
+   
+   newElem.setAttribute("data-time", new Date()- new Date(0))
+   newElem.appendChild(buttonDel)
+   newElem.appendChild(buttonDone)
+   currentList.appendChild(newElem)
+   
+   textAdd.value =""
+}
+
+function remove(id){
+  var li = document.getElementById(id).parentNode
+  currentList.removeChild(li)
+  
+  
+}
+
+function done(id){
+  var newElement = document.createElement("li"),
+      li = document.getElementById(id).parentNode,
+      old = li.getAttribute("data-time"),
+      end = new Date() - new Date(0)
+  
+  newElement.innerText =li.innerText+ " Время выполнения: " + minutes(end -old )
+  
+  currentList.removeChild(li)
+  archiveList.appendChild(newElement)
+  
+    
+}
+
+
+function minutes(milliseconds)
+{
+  milliseconds = Math.floor(milliseconds / 1000)
+  var seconds = milliseconds % 60
+  milliseconds = Math.floor(milliseconds / 60)
+  if (milliseconds < seconds)
+    return seconds + " сек."
+  else
+    var minutes = milliseconds % 60
+    milliseconds = Math.floor(milliseconds / 60)
+    if (milliseconds < minutes)
+      return minutes + " мин. " + seconds + " сек."
+    else
+      var hours = milliseconds % 24
+      milliseconds = Math.floor(milliseconds / 24)
+      if (milliseconds < hours)
+        return hours + " ч. " + minutes + " мин. "  + seconds + " сек. "
+}
+
+function time(arr)
+{
+    var  max =0 
+  
+     for(var j= 0; j < arr.length; j++)
+         
+       for(var t= j+1; t < arr.length; t++)
+          
+         if(arr[j].getAttribute("data-time") > arr[t].getAttribute("data-time"))
+           {
+              max = arr[j]
+              arr[j] = arr[t]
+              arr[t] =max
+           }    
+      
+       return arr
+}
+
+buttonSortTime.onclick = function(){
+  var a = currentList.childNodes,
+      arr =[]
+  
+  for (var i= 0; i < a.length; i++) 
+      arr.push(a[i])
+      
+     arr = time(arr)
+    
+    
+      while (currentList.childNodes.length > 0)
+      currentList.removeChild(currentList.firstChild)
+      
+      for (var i = 0; i < arr.length; i++)
+      currentList.appendChild(arr[i])
+}
+
+function abc(arr)
+{
+  var first
+  
+  for(var j= 0; j < arr.length; j++)
+       
+       for(var t= j+1; t < arr.length; t++)
+          
+         if(arr[j].innerText > arr[t].innerText)
+           {
+              first = arr[j]
+              arr[j] = arr[t]
+              arr[t] =first
+           }    
+      
+       return arr
+}
+buttonSortABC.onclick = function(){
+  var a = currentList.childNodes,
+      arr =[]
+  
+  for (var i= 0; i < a.length; i++) 
+      arr.push(a[i])
+      
+     arr = abc(arr)
+    
+    
+      while (currentList.childNodes.length > 0)
+      currentList.removeChild(currentList.firstChild)
+      
+      for (var i = 0; i < arr.length; i++)
+      currentList.appendChild(arr[i])
+}
+</script>
 </body>
+
 </html>
