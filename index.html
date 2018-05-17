@@ -93,22 +93,20 @@ var map = {
   find: function(key){
     var index = this.hashCode(key);
     
-    if (this.arr[index] == undefined)
-      return -1;
-    
-    if (this.arr[index].key === key)
-      return this.arr[index].value;
-    
-    var newIndex = index;
-    newIndex++;
-    while (this.arr[newIndex] != undefined && newIndex != index){
-      if (this.arr[newIndex].key == key)
-        return this.arr[newIndex].value;
-      if (newIndex == this.size)
-        newIndex = 0;
+    if (this.arr[index] == undefined || this.arr[index].key != key){
+      var newIndex = index;
       newIndex++;
+        while (this.arr[newIndex] != undefined && newIndex != index){
+        if (this.arr[newIndex].key == key)
+          return this.arr[newIndex].value;
+        if (newIndex == this.size)
+          newIndex = 0;
+        newIndex++;
+      }
+      return -1;
     }
-    return -1;
+    else
+      return this.arr[index].value;
   },
   
   del: function(key){
