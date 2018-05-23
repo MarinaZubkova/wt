@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by anonymous (http://jsbin.com/meqelexeyi/12/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+body {
+  height: 1000px;
+  background: no-repeat linear-gradient(to top left, powderblue, pink);
+}
+
+a{
+  margin-left:10px;
+  text-decoration:none;
+  color: black; }
+
+a:active  {
+   text-decoration:none;
+   color: red; }
+
+.navigat{
+   margin-left:520px;
+   border-radius: 5px;
+   margin-top: 100px;  
+}
+
+.dop{
+  border-radius: 5px;
+   margin-top: 100px; 
+}
+
+.open-modal {
+  display: block;
+  animation: fideIn 0.2s ease-in-out;
+}
+.Dop_close {
+  visibility: visible;
+  animation: fideOut 0.2s ease-in-out;
+  float: right;
+  width: 40px;
+}
+.close-menu {
+  margin-left: 50px;
+  width: 100px;
+}
+.move-side {
+  -webkit-animation: move-side 1s ease-in-out forwards;
+  -o-animation: move-side 1s ease-in-out forwards;
+  animation: move-side 1s ease-in-out forwards;
+}
+.move-side-back {
+  -webkit-animation: move-side-back 1s ease-in-out forwards;
+  -o-animation: move-side-back 1s ease-in-out forwards;
+  animation: move-side-back 1s ease-in-out forwards;
+}
+.modalwindow {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+.menu {
+  position: absolute;
+  width: 150px;
+  left: -150px;
+}
+
+.dop-content{
+  width: 500px;
+  height: 100px;
+  background-color:lavender;
+  padding: 1px 10px;
+  margin: 0 auto;
+  margin-top: 100px; 
+}
+@keyframes move-side {
+  0% {left: -150px;}
+  100% {left: 0;}
+}
+@keyframes move-side-back {
+  0% {left: 0;}
+  100% {left: -150px;}
+}
+@keyframes fadeIn {
+  0% {
+      transform: scale(0);
+      opacity: 0;		
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;	
+  }		
+}
+@keyframes fadeOut {
+  0% {
+      transform: scale(1);
+      opacity: 1;		
+     }
+  100% {
+      transform: scale(0);
+      opacity: 0;	
+  }		
+}
+
+
+</style>
+</head>
+<body>
+  <div>
+    <div>
+      <input type="button" id="navigation" class="navigat" value="Навигация">
+      <input type="button" id="dop-material" class="dop" value="Дополнительные материалы">
+    </div>
+
+    <div id="menu" class="menu">
+      <a href="#">Главная страница</a>
+      <hr>
+      <a href="#">Блог</a>
+      <hr>
+      <a href="#">Контакты</a>
+      <hr>
+      <a href="#">Помощь</a>
+      <br><input type="button" id="close-menu" class="close-menu" value ="Закрыть меню">
+    </div>
+
+   <div class="modalwindow " id="modalwindow ">
+      <div class="dop-content" id="dop-content">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Phoenician_taw.svg/1024px-Phoenician_taw.svg.png" id="Dop_close" class="Dop_close" >
+        <h3>Дополнительные материалы</h3>
+        <p>Тут нет ничего интересного! Закройте окно!</p>
+      </div>
+    </div>
+  </div>
+<script id="jsbin-javascript">
+var Navig = document.getElementById('navigation'),
+ menu = document.getElementById('menu'),
+ closeMenu = document.getElementById('close-menu'),
+ ButtonDop = document.getElementById('dop-material'),
+ modalwindow = document.getElementById('modalwindow '),
+ Dopcont = document.getElementById('dop-content'),
+ Dop_close = document.getElementById('Dop_close')
+
+  Navig.onclick = function(){
+  menu.classList.remove('move-side-back')
+  menu.classList.add('move-side');}
+ 
+  closeMenu.onclick = function(){
+  menu.classList.remove('move-side')
+  menu.classList.add('move-side-back');}
+ 
+  ButtonDop.onclick = function() {
+  modalwindow.style.display = "block"
+  Dopcont.classList.remove('Dop_close')
+  Dopcont.classList.add('open-modal');}
+ 
+  Dop_close.onclick = function() {
+  modalwindow.style.display = "none"
+  Dopcont.classList.remove('open-modal')
+  Dopcont.classList.add('Dop_close');}
+</script>
+</body>
+</html>
