@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by MarinaZubkova (http://jsbin.com/pucihiv/54/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>24</title>
+  <link href="https://fonts.googleapis.com/css?family=Khand" rel="stylesheet">
+<style id="jsbin-css">
+input{
+  margin:6px;
+}
+</style>
+</head>
+
+<body>
+  <input type="button" value ="Создание объекта" onclick = "func1();" ><br>
+  
+  <input type="button" value ="Свойства объекта(defineProperty)" onclick = "func2();"><br>
+  
+  <input type="button" value ="Cвойства с функциями доступа(Object.defineProperty)" onclick = "func3();"><br>
+  
+  <input type="button" value ="Object.getOwnPropertyDescriptor" onclick = "func4();"><br>
+  
+  <input type="button" value ="Object.preventExtensions/Object.isExtensible" onclick = "func5();"><br>
+  
+  <input type="button" value ="Object.seal/Object.isSealed" onclick = "func6();"><br>
+  
+  <input type="button" value ="Object.freeze/Object.isFrozen" onclick = "func7();"><br>
+  
+  <input type="button" value ="in" onclick = "func8();"><br>
+  
+  <input type="button" value ="for..in"onclick = "func9();"><br>
+  
+  <input type="button" value ="Object.keys" onclick = "func10();"><br>
+  
+  <input type="button" value ="Object.getOwnPropertyNames" onclick = "func11();"><br>
+  
+  <input type="button" value ="Сокрытие свойств в дочернем объекте" onclick = "func12();"><br>
+  
+  <input type="button" value ="Независимость прототипа от дочернего объекта" onclick = "func13();"><br>
+<script id="jsbin-javascript">
+function func1() {
+  var person = { //Создаем объект
+    name: "Вася" //Задаем ему св-во name 
+  };
+  alert(person.name);
+  person.name = "Петя";
+  alert(person.name);
+}
+
+function func2() {
+  var person = {};
+  //Задаем св-во для объекта
+  Object.defineProperty(person, "name", {
+    enumerable: true,
+    writable: true,
+    configurable: false, //Запретим удаление 
+    value: "Васечкин"
+  });
+  alert(person.name);
+  delete person.name;
+  alert(person.name);//Проверяем, что св-во не удалилось
+}
+
+function func3() {
+  var person = {
+    name1: "Федя",
+    age: 21
+  };
+
+  Object.defineProperty(person, "name", {
+    get: function() {
+      return this.name1; // При вызове свойства name будет возвращаться значение св-ва name1
+    },
+    set: function(value) {
+      // При записи в свойства age нового значения оно будет изменяться
+      alert(this.age + ' ' + this.name1)
+      this.age = value + 2;
+      alert(this.age + ' ' + this.name);
+
+    }
+  });
+  alert(person.name);
+  person.name = 5;
+}
+
+
+function func4() {
+  var person = {};
+  Object.defineProperty(person, "surname", {
+    enumerable: true,
+    writable: true,
+    configurable: false, //Запретим удаление
+    value: "Петров"
+  })
+  var descriptor = Object.getOwnPropertyDescriptor(person, "surname");//Записываем в переменную параметры св-ва 
+  alert("Enumerable: " + descriptor.enumerable + "\nWritable: " + descriptor.writable + "\nConfigurable: " + descriptor.configurable + "\nValue: " + descriptor.value);
+}
+
+function func5() {
+  var person = {
+    name: "Борис"
+  };
+  Object.defineProperty(person, "surname", {
+    enumerable: false,
+    writable: false,
+    configurable: true,
+    value: "Полежайкин"
+  })
+  Object.preventExtensions(person); // Запрещаем добавлять св-ва
+  alert(Object.isExtensible(person)); // Проверка на расширяемость
+  person.patronymic = "Михайлович"
+  alert(person.patronymic); //Св-во не добавится, так как мы запретили добавление
+  delete person.surname;
+  alert(person.surname);
+
+}
+
+function func6() {
+  var person = {
+    name: "Борис"
+  };
+  Object.defineProperty(person, "surname", {
+    enumerable: false,
+    writable: false,
+    configurable: true,
+    value: "Полежайкин"
+  })
+  Object.seal(person);//Теперь нельзя добавлять свойства и удалять их
+  alert(Object.isSealed(person));//Проверяем выполнение seal
+  person.patronymic = "Михайлович"
+  alert(person.patronymic);
+  delete person.surname;
+  alert(person.surname);
+
+}
+
+function func7() {
+  var person = {
+    name: "Борис"
+  };
+  Object.defineProperty(person, "surname", {
+    enumerable: false,
+    writable: false,
+    configurable: true,
+    value: "Полежайкин"
+  })
+  Object.freeze(person); // Замораживаем объект. Теперь нельзя изменить его св-ва
+  alert(Object.isFrozen(person)); // Проверка заморозки
+  person.patronymic = "Михайлович"
+  alert(person.patronymic)
+  delete person.surname
+  alert(person.surname)
+  person.name = "Антон"
+  alert(person.name)
+
+}
+
+function func8() {
+  var car = {
+    sound: "Тр тр тр трррр"
+  }
+  var lada = {
+    color: 'black',
+    year: 2014
+  }
+
+  lada.__proto__ = car;
+
+  alert(lada.sound);//Проверяем наличие св-ва
+  alert("sound" in lada);
+}
+
+function func9() {
+  var car = {
+    sound: "Тр тр тр трррр"
+  }
+  var lada = {
+    color: 'black',
+    year: 2014
+  }
+
+  lada.__proto__ = car;
+
+  var str = "";
+  for (var j in lada) {
+    str += j + "\n";// Последовательно перебираем все свойства экземпляра
+  }
+  alert(str);//Выводим св-ва
+}
+
+function func10() {
+  var car = {
+    sound: "Тр тр тр трррр"
+  }
+  var lada = {
+    color: 'black',
+    year: 2014
+  }
+
+  lada.__proto__ = car;
+
+  Object.defineProperty(lada, "year", {
+    enumerable: false
+  });
+
+  var keys = Object.keys(lada);// Переменной присваиваем перечисляемые св-ва объекта
+  alert(keys);
+}
+
+
+function func11() {
+  var car = {
+    sound: "Тр тр тр трррр"
+  }
+  var lada = {
+    color: 'black',
+    year: 2014
+  }
+
+  lada.__proto__ = car;
+
+  Object.defineProperty(lada, "color", {
+    enumerable: false
+  });
+
+  var keys = Object.getOwnPropertyNames(lada);// Переменной присваиваем перечисляемые и неперечисляемые св-ва объекта
+  alert(keys);
+
+}
+
+function func12() {
+  var car = {
+    sound: "Тр тр тр трррр"
+  }
+  var lada = {
+    color: 'black',
+    year: 2014
+  }
+
+  lada.__proto__ = car;
+  // Перезаписывается св-во прототипа, которое перекрывает свойство родителя
+  lada.sound = "Биип Бииип"
+  alert(lada.sound);
+}
+
+function func13() {
+  var car = {
+    sound: "Тр тр тр трррр"
+  }
+  var lada = {
+    color: 'black',
+    year: 2014
+  }
+
+  lada.__proto__ = car;
+
+  lada.sound = "Биип Бииип"
+  alert(lada.sound);
+  alert(car.sound);//Проверяем что св-во прототипа не перезаписалось перезаписи св-ва экземпляра
+
+}
+</script>
+</body>
+
+</html>
